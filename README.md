@@ -6,16 +6,11 @@ pidfile package
 ````
 	import "github.com/h2object/pidfile"
 
-	// create pid file 
+	// insert into the process begin 
 	pid, err := pidfile.New("h2object.pid")
 	if err != nil {
 		//....
 	}
-
-
-	// stop pid process
-	if err := pid.Kill(); err != nil {
-		//....
-	}
+	defer pid.Kill()
 
 ````
