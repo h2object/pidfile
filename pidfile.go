@@ -13,13 +13,14 @@ type PidFile struct {
 }
 
 func getPidProcess(path string) (*os.Process, error) {
-	if pidString, err := ioutil.ReadFile(path); err != nil {
+	pidString, err := ioutil.ReadFile(path);
+	if err != nil {
 		return nil, err
 	}
 
 	pid, err := strconv.Atoi(string(pidString))
 	if err != nil {
-		return nil, fmt.Sprintf("%s fake", path)
+		return nil, fmt.Errorf("%s fake", path)
 	}
 
 	proc, err := os.FindProcess(pid)
@@ -59,7 +60,7 @@ func New(path string) (*PidFile, error) {
 }
 
 func (file *PidFile) Kill() error {
-	defer file.Remove()
+	defer file.remove()
 	proc, err := getPidProcess(file.path)
 	if err != nil {
 		return err
