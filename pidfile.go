@@ -59,6 +59,13 @@ func New(path string) (*PidFile, error) {
 	return &PidFile{path: path}, nil
 }
 
+func Load(path string) (*PidFile, error) {
+	if _, err := os.Stat(path); err != nil {
+		return nil, err
+	}
+	return &PidFile{path: path}, nil
+}
+
 func (file *PidFile) Kill() error {
 	defer file.remove()
 	proc, err := getPidProcess(file.path)
