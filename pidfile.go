@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"syscall"
 	"path/filepath"
 	"strconv"
 )
@@ -74,5 +75,14 @@ func (file *PidFile) Kill() error {
 	}
 
 	return proc.Kill()
+}
+
+func (file *PidFile) HUP() error {
+	proc, err := getPidProcess(file.path)
+	if err != nil {
+		return err
+	}
+
+	return proc.Signal(os.Signal(syscall.SIGHUP))
 }
 
