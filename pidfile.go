@@ -34,7 +34,7 @@ func getPidProcess(path string) (*os.Process, error) {
 func checkPidFileAlreadyExists(path string) error {
 	if pidString, err := ioutil.ReadFile(path); err == nil {
 		if pid, err := strconv.Atoi(string(pidString)); err == nil {
-			if _, err := os.Stat(filepath.Join("/proc", string(pid))); err == nil {
+			if _, err := os.Stat(filepath.Join("/proc", string(pidString))); err == nil {
 				return fmt.Errorf("pid process is running")
 			}
 		}
