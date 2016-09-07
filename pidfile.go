@@ -19,7 +19,7 @@ func getPidProcess(path string) (*os.Process, error) {
 		return nil, err
 	}
 
-	pid, err := strconv.Atoi(string(pidString))
+	_, err := strconv.Atoi(string(pidString))
 	if err != nil {
 		return nil, fmt.Errorf("%s fake", path)
 	}
